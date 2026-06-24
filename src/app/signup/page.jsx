@@ -1,9 +1,11 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
 
 const SignUpPage = () => {
   const router = useRouter();
@@ -19,13 +21,13 @@ const SignUpPage = () => {
     const user = Object.fromEntries(formData.entries());
 
     try {
-  
+
       const { data, error } = await authClient.signUp.email({
         name: user?.name,
         email: user?.email,
         password: user?.password,
-        image: user?.image || "", 
-        callbackURL: "/", 
+        image: user?.image || "",
+        callbackURL: "/",
       });
 
       if (error) {
@@ -38,8 +40,8 @@ const SignUpPage = () => {
       if (data) {
         console.log("Signup Successful:", data);
         toast.success("Signup successful! 🎉");
-        
-  
+
+
         router.push("/");
         router.refresh();
       }
@@ -50,6 +52,23 @@ const SignUpPage = () => {
       console.error("Catch Error:", err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+     
+      toast.loading("Connecting to Google...", { id: "google-auth" });
+
+      const data = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+
+      console.log(data);
+    } catch (err) {
+      console.error("Google Sign-In Error:", err);
+      toast.error(err.message || "Google Sign-In failed!", { id: "google-auth" });
     }
   };
 
@@ -135,6 +154,25 @@ const SignUpPage = () => {
             Sign In
           </a>
         </div>
+        {/* Divaider */}
+        <div className="flex items-center my-5 gap-3">
+          <div className="h-[1px] w-full bg-zinc-900" />
+          <span className="text-[10px] uppercase tracking-widest text-zinc-600 font-semibold">OR</span>
+          <div className="h-[1px] w-full bg-zinc-900" />
+        </div>
+
+
+        {/* Google sign in */}
+        <Button
+          onClick={handleGoogleSignIn}
+          variant="bordered"
+          className="w-full border-zinc-800 text-white hover:bg-zinc-900 font-medium gap-2 text-sm"
+          radius="xl"
+          size="lg"
+        >
+          <FcGoogle className="text-xl" />
+          Continue with Google
+        </Button>
       </div>
     </div>
   );
