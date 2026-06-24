@@ -1,7 +1,10 @@
+// হোমপেজের ভেতরে একদম উপরে এটি পেস্ট করো:
+ // ৩ সেকেন্ড লোড হতে বাধ্য করবে
 import { Button } from "@heroui/react";
 import Image from "next/image";
 
-export default function Home() {
+export default async function  Home() {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">

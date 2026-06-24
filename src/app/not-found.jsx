@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from '@heroui/react'; // তোমার প্রজেক্টের HeroUI বাটন ব্যবহার করা হলো
+import { Button } from '@heroui/react';
 
 export default function NotFound() {
     const router = useRouter();
