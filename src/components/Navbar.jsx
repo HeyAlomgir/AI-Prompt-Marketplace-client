@@ -64,13 +64,16 @@ const Navbar = () => {
                         {/* 🚀 BRAND LOGO AREA */}
                         <Link href="/" className="flex items-center gap-2.5 text-foreground font-bold text-xl tracking-tight select-none group">
                             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-primary via-purple-500 to-indigo-600 text-white shadow-md shadow-primary/20 transition-transform duration-300 group-hover:scale-105 overflow-hidden">
-                                <Image
+                                {/* <Image
                                     src="https://i.ibb.co.com/M5P07f7t/image-removebg-preview.png"
                                     width={40}
                                     height={40}
                                     className="object-cover scale-110"
                                     alt="AI PromptVerse"
-                                />
+                                /> */}
+                                <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm">
+                                    AI
+                                </div>
                             </div>
                             <div className="flex flex-col justify-center leading-none">
                                 <div className="flex items-center text-lg md:text-xl font-extrabold tracking-tight">
