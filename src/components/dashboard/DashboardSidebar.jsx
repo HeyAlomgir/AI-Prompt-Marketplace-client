@@ -14,20 +14,20 @@ export async function DashboardSidebar() {
         headers: await headers()
     });
     const user = session?.user;
-    const role = user?.role || "user"
+    const role = user?.role || "User"
 
     console.log("Role:", role)
     console.log(user);
     const dashboardItems = {
         creator: [
-            { icon: ChartAreaStacked, label: "Overview", link: '/dashboard/seller' },
-            { icon: TbAsset, label: "Products", link: '/dashboard/seller/products' },
-            { icon: BiMoney, label: "Transaction", link: '/dashboard/seller/transaction' }
+            { icon: ChartAreaStacked, label: "Overview", link: '/dashboard/creator' },
+            { icon: TbAsset, label: "Product", link: '/dashboard/creator/product' },
+            { icon: BiMoney, label: "Transaction", link: '/dashboard/creator/transaction' }
         ],
         user: [
-            { icon: ChartAreaStacked, label: "Overview", link: '/dashboard/buyer' },
-            { icon: TbAsset, label: "Products", link: '/dashboard/buyer/products' },
-            { icon: BiMoney, label: "Transaction", link: '/dashboard/buyer/transaction' }
+            { icon: ChartAreaStacked, label: "Overview", link: '/dashboard/user' },
+            { icon: TbAsset, label: "Prompt", link: '/dashboard/user/products' },
+            { icon: BiMoney, label: "Transaction", link: '/dashboard/user/transaction' }
         ],
         admin: [
             { icon: ChartAreaStacked, label: "Overview", link: '/dashboard/admin' },
