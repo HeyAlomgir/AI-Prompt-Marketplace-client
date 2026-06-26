@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { FaRocket } from "react-icons/fa";
 
 export default function AddPrompt() {
   const [loading, setLoading] = useState(false);
@@ -45,7 +46,7 @@ export default function AddPrompt() {
     <div className="max-w-2xl mx-auto bg-slate-900 bg-opacity-60 backdrop-blur-md p-8 rounded-2xl border border-slate-800 shadow-2xl my-6">
       {/* Header */}
       <div className="flex items-center space-x-3 mb-6 border-b border-slate-800 pb-4">
-        <span className="text-2xl">🚀</span>
+        <span className="text-2xl"> <FaRocket className="text-blue-500" /> </span>
         <h2 className="text-xl font-bold text-white tracking-wide">
           Add New AI Prompt
         </h2>
