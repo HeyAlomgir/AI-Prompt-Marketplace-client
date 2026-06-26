@@ -16,6 +16,7 @@ import { BiLogOut, BiLogOut as LogOutIcon } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { MdDashboard } from "react-icons/md";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,6 +31,15 @@ const Navbar = () => {
     const handleSignOut = async () => {
         await authClient.signOut();
     };
+
+
+
+    const pathName = usePathname();
+
+    if (pathName.includes("dashboard")) {
+        return null;
+    };
+    
 
     return (
         <div>

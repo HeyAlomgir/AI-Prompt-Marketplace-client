@@ -1,15 +1,23 @@
 "use client";
 
 import { Link } from "@heroui/react";
+import { usePathname } from "next/navigation";
 import { FaGithub } from "react-icons/fa";
 import { LiaLinkedin } from "react-icons/lia";
 
 
 export default function Footer() {
+
+  const pathName = usePathname();
+
+  if (pathName.includes("dashboard")) {
+    return null;
+  };
+
   return (
     <footer className="w-full bg-black/60 border-t border-zinc-900 text-zinc-400 py-12 px-6 sm:px-12 md:px-24">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        
+
 
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
@@ -51,19 +59,19 @@ export default function Footer() {
         <div className="flex flex-col gap-3">
           <h4 className="text-white font-semibold text-xs tracking-widest uppercase">Follow Us</h4>
           <div className="flex items-center gap-3">
-      
-            <Link 
+
+            <Link
               isExternal
-              href="https://www.linkedin.com/in/alomgir-hossain-web/" 
+              href="https://www.linkedin.com/in/alomgir-hossain-web/"
               className="p-2 bg-zinc-900 rounded-lg hover:bg-zinc-800 text-white transition-all hover:scale-105 text-lg"
             >
               <LiaLinkedin />
             </Link>
-            
 
-            <Link 
+
+            <Link
               isExternal
-              href="https://github.com/HeyAlomgir" 
+              href="https://github.com/HeyAlomgir"
               className="p-2 bg-zinc-900 rounded-lg hover:bg-zinc-800 text-white transition-all hover:scale-105 text-lg"
             >
               <FaGithub />
