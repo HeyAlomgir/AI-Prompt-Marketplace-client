@@ -3,13 +3,14 @@
 import { Avatar } from "@heroui/react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaUserCircle, FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
+
 
 export default function AdminAllUsers() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // ১. সব ইউজার লোড করার ফাংশন
+    // all user load funcation
     const loadUsers = () => {
         fetch("http://localhost:5000/api/admin/users")
             .then((res) => res.json())
@@ -45,6 +46,22 @@ export default function AdminAllUsers() {
             toast.error("Failed to update role");
         }
     };
+
+    const handleDeleteUseer = async(id)=>{
+        try{
+            const res = await fetch(`http://localhost:5000/api/admin/users/${id}`,{
+                method:"DELETE",
+            })
+            const data = await res.json();
+            if(data.deletedCount>0){
+                toast.success("user deletd successfully!");
+                loadUsers();
+            }
+        }catch(error)
+        {
+            toast.error("Faild to delte user!")
+        }
+    }
 
     if (loading) {
         return <div className="text-center p-10 text-slate-400">Loading Users...</div>;
@@ -97,7 +114,9 @@ export default function AdminAllUsers() {
                                 </td>
 
                                 <td className="p-4 text-center">
-                                    <button className="p-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 rounded-xl transition-colors">
+                                    <button
+                                    onClick={()=>handleDeleteUseer(user._id)}
+                                    className="p-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 rounded-xl transition-colors">
                                         <FaTrashAlt size={14} />
                                     </button>
                                 </td>
