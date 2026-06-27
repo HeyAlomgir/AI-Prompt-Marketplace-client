@@ -8,6 +8,9 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { BiMoney } from "react-icons/bi";
+import { GiAnatomy } from "react-icons/gi";
+import { IoIosAddCircle } from "react-icons/io";
+import { SiSpringCreators } from "react-icons/si";
 import { TbAsset } from "react-icons/tb";
 
 export async function DashboardSidebar() {
@@ -30,10 +33,11 @@ export async function DashboardSidebar() {
             { icon: Gear, label: "Bookmarks", link: '/dashboard/user/bookmarks' }
         ],
         creator: [
-            { icon: ChartAreaStacked, label: "Overview", link: '/dashboard/creator' },
-            { icon: TbAsset, label: "My Prompts", link: '/dashboard/creator/prompts' },
-            { icon: Envelope, label: "Add Prompt", link: '/dashboard/creator/add-prompt' },
-            { icon: BiMoney, label: "Earnings", link: '/dashboard/creator/earnings' }
+            
+            { icon: SiSpringCreators, label: "Creator Dashboard Home", link: '/dashboard/creator' },
+            { icon: IoIosAddCircle, label: "Add Prompt", link: '/dashboard/creator/add-prompt' },
+       
+            { icon: GiAnatomy, label: "My Prompts", link: '/dashboard/creator/my-prompts' },
         ],
         admin: [
             { icon: ChartAreaStacked, label: "Overview", link: '/dashboard/admin' },
