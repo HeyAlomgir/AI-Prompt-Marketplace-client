@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BiMoney } from "react-icons/bi";
 import { GiAnatomy } from "react-icons/gi";
+import { GoReport } from "react-icons/go";
 import { IoIosAddCircle } from "react-icons/io";
 import { SiSpringCreators } from "react-icons/si";
 import { TbAsset } from "react-icons/tb";
@@ -23,27 +24,28 @@ export async function DashboardSidebar() {
     const role = currentRole;
 
     console.log("Role:", role)
-    console.log(user);
-
+    console.log(user)
 
     const dashboardItems = {
+
         user: [
             { icon: ChartAreaStacked, label: "Overview", link: '/dashboard/user' },
             { icon: TbAsset, label: "My Purchases", link: '/dashboard/user/purchases' },
             { icon: Gear, label: "Bookmarks", link: '/dashboard/user/bookmarks' }
         ],
         creator: [
-            
+
             { icon: SiSpringCreators, label: "Creator Dashboard Home", link: '/dashboard/creator' },
             { icon: IoIosAddCircle, label: "Add Prompt", link: '/dashboard/creator/add-prompt' },
-       
+
             { icon: GiAnatomy, label: "My Prompts", link: '/dashboard/creator/my-prompts' },
         ],
         admin: [
-            { icon: ChartAreaStacked, label: "Overview", link: '/dashboard/admin' },
-            { icon: Person, label: "Manage Users", link: '/dashboard/admin/user-manage' },
-            { icon: TbAsset, label: "Approve Prompts", link: '/dashboard/admin/approve-prompts' },
-            { icon: BiMoney, label: "All Transactions", link: '/dashboard/admin/transactions' }
+            { icon: Person, label: "All User", link: '/dashboard/admin/all-user' },
+            { icon: TbAsset, label: "All Prompts", link: '/dashboard/admin/all-prompts' },
+            { icon: BiMoney, label: "All Payement", link: '/dashboard/admin/all-payment' },
+            { icon: ChartAreaStacked, label: "Admin Analytics", link: '/dashboard/admin' },
+            { icon: GoReport, label: "Report Prompt", link: '/dashboard/report-prompt' },
         ],
     };
 
@@ -68,7 +70,11 @@ export async function DashboardSidebar() {
                         <Drawer.Dialog>
                             <Drawer.CloseTrigger />
                             <Drawer.Header>
-                                <Drawer.Heading>Navigation</Drawer.Heading>
+                                <Drawer.Heading>
+                                    <div className="w-72 h-32 rounded-lg bg-gradient-to-tr from-purple-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm">
+                                        AI
+                                    </div>
+                                </Drawer.Heading>
                             </Drawer.Header>
                             <Drawer.Body className="flex flex-col justify-between h-full pb-6">
                                 {/* sm menu */}
@@ -100,7 +106,7 @@ export async function DashboardSidebar() {
                     {/* logo area */}
                     <div className="border-b pb-3">
                         <Link href="/">
-                            {/* <Image src="/logo-xl.png" width={230} height={130} alt="logo" className="cursor-pointer" /> */}
+
                             <div className="w-55 h-32 rounded-lg bg-gradient-to-tr from-purple-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm">
                                 AI
                             </div>
