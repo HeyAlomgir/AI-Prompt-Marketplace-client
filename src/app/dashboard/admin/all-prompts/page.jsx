@@ -2,17 +2,17 @@
 
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaExternalLinkAlt, FaCheck, FaTimes, FaTrashAlt } from "react-icons/fa";
+import { FaExternalLinkAlt, FaCheck, FaTimes, FaTrashAlt, FaStar } from "react-icons/fa";
 
 export default function AdminAllPrompts() {
   const [prompts, setPrompts] = useState([]);
   const [loading, setLoading] = useState(true);
   
-// rejected
+  // রিজেকশন ফিডব্যাকের জন্য স্টেট
   const [rejectingPromptId, setRejectingPromptId] = useState(null);
   const [feedbackText, setFeedbackText] = useState("");
 
-// load data
+  // ডাটা লোড করার ফাংশন
   const loadPrompts = () => {
     fetch("http://localhost:5000/api/admin/prompts")
       .then((res) => {
@@ -33,7 +33,7 @@ export default function AdminAllPrompts() {
     loadPrompts();
   }, []);
 
-  // status update or reject funacion
+  // স্ট্যাটাস আপডেট করার ফাংশন (Approve বা Reject)
   const handleUpdateStatus = async (id, status, feedback = "") => {
     try {
       const response = await fetch(`http://localhost:5000/api/admin/prompts/status/${id}`, {
@@ -47,14 +47,39 @@ export default function AdminAllPrompts() {
         toast.success(`Prompt ${status} successfully!`);
         setRejectingPromptId(null);
         setFeedbackText("");
-        loadPrompts(); 
+        loadPrompts(); // ডাটা রিফ্রেশ
       }
     } catch (error) {
       toast.error("Failed to update status");
     }
   };
 
-  // prompt delete funcation
+  // 🌟 প্রম্পট ফিচারড করার ফাংশন
+  const handleToggleFeatured = async (id, currentFeatured, status) => {
+    // যদি প্রম্পট অ্যাপ্রুভড না হয়, তাহলে ফিচারড করতে দেবে না
+    if (status !== "approved" && !currentFeatured) {
+      toast.error("Only approved prompts can be featured!");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/admin/prompts/featured/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isFeatured: !currentFeatured }),
+      });
+      const data = await response.json();
+
+      if (data.modifiedCount > 0) {
+        toast.success(!currentFeatured ? "Prompt marked as Featured!" : "Removed from Featured!");
+        loadPrompts(); // ডাটা রিফ্রেশ
+      }
+    } catch (error) {
+      toast.error("Failed to update featured status");
+    }
+  };
+
+  // প্রম্পট ডিলিট করার ফাংশন
   const handleDeletePrompt = async (id) => {
     try {
       const res = await fetch(`http://localhost:5000/api/admin/prompts/${id}`, {
@@ -64,7 +89,7 @@ export default function AdminAllPrompts() {
 
       if (data.deletedCount > 0) {
         toast.success("Prompt deleted successfully!");
-        loadPrompts(); 
+        loadPrompts(); // ডাটা রিফ্রেশ
       }
     } catch (error) {
       toast.error("Failed to delete prompt!");
@@ -82,17 +107,23 @@ export default function AdminAllPrompts() {
         <p className="text-xs md:text-sm text-slate-400">View and manage marketplace prompts.</p>
       </div>
 
-  
+      {/* 📱 ১. মোবাইল ভিউ (কার্ড ফরম্যাট) */}
       <div className="block md:hidden space-y-4">
         {prompts.map((prompt) => (
           <div key={prompt._id || prompt.id} className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 shadow-xl flex flex-col gap-3">
             <div className="flex justify-between items-start gap-2">
               <div>
                 <div className="flex items-center gap-1.5">
-                  <h3 className="font-semibold text-slate-200 text-base truncate max-w-[180px]">{prompt.title}</h3>
+                  <h3 className="font-semibold text-slate-200 text-base truncate max-w-[150px]">{prompt.title}</h3>
                   <a href={`/prompts/${prompt._id || prompt.id}`} target="_blank" className="text-purple-400">
                     <FaExternalLinkAlt size={11} />
                   </a>
+                  {/* মোবাইল ফিচারড ব্যাজ */}
+                  {prompt.isFeatured && (
+                    <span className="text-amber-400 flex items-center text-xs gap-0.5 font-bold bg-amber-400/10 px-1.5 py-0.5 rounded-md border border-amber-400/20">
+                      <FaStar size={10} /> Get
+                    </span>
+                  )}
                 </div>
                 <p className="text-xs text-slate-400 capitalize mt-0.5">{prompt.category || "N/A"}</p>
               </div>
@@ -102,7 +133,6 @@ export default function AdminAllPrompts() {
             </div>
 
             <div className="flex items-center justify-between border-t border-slate-800/60 pt-2.5 mt-1 relative">
-              {/* status and rejectin */}
               <div className="flex flex-col gap-0.5">
                 <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase inline-block w-max ${
                   prompt.status === "approved" ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : 
@@ -112,67 +142,43 @@ export default function AdminAllPrompts() {
                   {prompt.status || "pending"}
                 </span>
                 {prompt.status === "rejected" && prompt.feedback && (
-                  <span className="text-[11px] text-rose-400/80 italic max-w-[140px] block truncate" title={prompt.feedback}>
+                  <span className="text-[11px] text-rose-400/80 italic max-w-[140px] block truncate">
                     Reason: {prompt.feedback}
                   </span>
                 )}
               </div>
 
-              {/* action btn */}
+              {/* অ্যাকশন বাটনসমূহ (ফিচারড সহ) */}
               <div className="flex items-center gap-2">
+                {/* 🌟 Feature Button */}
                 <button
-                  onClick={() => handleUpdateStatus(prompt._id || prompt.id, "approved")}
-                  className="p-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 rounded-xl transition-colors"
+                  onClick={() => handleToggleFeatured(prompt._id || prompt.id, prompt.isFeatured, prompt.status)}
+                  className={`p-2 rounded-xl transition-colors ${
+                    prompt.isFeatured 
+                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/40" 
+                      : "bg-slate-800 text-slate-400 border border-slate-700 hover:bg-slate-700"
+                  }`}
+                  title={prompt.isFeatured ? "Unfeature Prompt" : "Feature Prompt"}
                 >
+                  <FaStar size={11} />
+                </button>
+
+                <button onClick={() => handleUpdateStatus(prompt._id || prompt.id, "approved")} className="p-2 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-xl">
                   <FaCheck size={11} />
                 </button>
-                <button
-                  onClick={() => {
-                    setRejectingPromptId(prompt._id || prompt.id);
-                    setFeedbackText("");
-                  }}
-                  className="p-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/20 rounded-xl transition-colors"
-                >
+                <button onClick={() => { setRejectingPromptId(prompt._id || prompt.id); setFeedbackText(""); }} className="p-2 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-xl">
                   <FaTimes size={11} />
                 </button>
-                <button
-                  onClick={() => handleDeletePrompt(prompt._id || prompt.id)}
-                  className="p-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 rounded-xl transition-colors"
-                >
+                <button onClick={() => handleDeletePrompt(prompt._id || prompt.id)} className="p-2 bg-rose-500/10 text-rose-400 border border-rose-500/20 rounded-xl">
                   <FaTrashAlt size={11} />
                 </button>
               </div>
-
-              {/* sm fedbeek box*/}
-              {rejectingPromptId === (prompt._id || prompt.id) && (
-                <div className="absolute right-0 bottom-12 z-50 p-3 bg-slate-950 border border-amber-500/40 rounded-xl flex flex-col gap-2 w-56 shadow-2xl">
-                  <p className="text-[11px] text-amber-400 font-medium">Why reject this?</p>
-                  <textarea
-                    value={feedbackText}
-                    onChange={(e) => setFeedbackText(e.target.value)}
-                    placeholder="Reason..."
-                    className="w-full bg-slate-900 border border-slate-800 text-xs rounded-lg p-2 text-white resize-none h-12 focus:outline-none focus:border-amber-500"
-                  />
-                  <div className="flex justify-end gap-1.5">
-                    <button onClick={() => setRejectingPromptId(null)} className="px-2 py-0.5 bg-slate-800 text-[10px] rounded-md text-slate-300">
-                      Cancel
-                    </button>
-                    <button 
-                      disabled={!feedbackText.trim()} 
-                      onClick={() => handleUpdateStatus(prompt._id || prompt.id, "rejected", feedbackText)} 
-                      className="px-2 py-0.5 bg-amber-600 text-[10px] rounded-md text-white disabled:opacity-50"
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         ))}
       </div>
 
-      {/* desktop and md device view */}
+      {/* 💻 ২. ডেক্সটপ ভিউ (টেবিল ফরম্যাট) */}
       <div className="hidden md:block w-full overflow-x-auto bg-slate-900/60 backdrop-blur-md rounded-2xl border border-slate-800 shadow-xl">
         <table className="w-full text-left border-collapse">
           <thead>
@@ -201,13 +207,21 @@ export default function AdminAllPrompts() {
                 </td>
                 <td className="p-4">
                   <div className="flex flex-col gap-1">
-                    <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold uppercase inline-block w-max ${
-                      prompt.status === "approved" ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : 
-                      prompt.status === "rejected" ? "bg-rose-500/10 text-rose-400 border border-rose-500/20" : 
-                      "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                    }`}>
-                      {prompt.status || "pending"}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold uppercase inline-block w-max ${
+                        prompt.status === "approved" ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : 
+                        prompt.status === "rejected" ? "bg-rose-500/10 text-rose-400 border border-rose-500/20" : 
+                        "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                      }`}>
+                        {prompt.status || "pending"}
+                      </span>
+                      {/* ডেক্সটপ ফিচারড ইন্ডিকেটর ব্যাজ */}
+                      {prompt.isFeatured && (
+                        <span className="text-[10px] text-amber-400 bg-amber-400/10 border border-amber-400/20 px-1.5 py-0.5 rounded-md font-bold uppercase flex items-center gap-1">
+                          <FaStar size={8} /> Featured
+                        </span>
+                      )}
+                    </div>
                     {prompt.status === "rejected" && prompt.feedback && (
                       <span className="text-[11px] text-rose-400/80 italic max-w-[150px] block truncate" title={prompt.feedback}>
                         Reason: {prompt.feedback}
@@ -217,6 +231,20 @@ export default function AdminAllPrompts() {
                 </td>
                 <td className="p-4">
                   <div className="flex items-center justify-center gap-2 relative">
+                    
+                    {/* 🌟 Feature/Unfeature Button */}
+                    <button 
+                      onClick={() => handleToggleFeatured(prompt._id || prompt.id, prompt.isFeatured, prompt.status)} 
+                      className={`p-2 rounded-xl transition-colors ${
+                        prompt.isFeatured 
+                          ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 hover:bg-amber-500/30" 
+                          : "bg-slate-800 text-slate-500 border border-slate-700/60 hover:bg-slate-700 hover:text-slate-300"
+                      }`}
+                      title={prompt.isFeatured ? "Unfeature" : "Feature"}
+                    >
+                      <FaStar size={12} />
+                    </button>
+
                     <button onClick={() => handleUpdateStatus(prompt._id || prompt.id, "approved")} className="p-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 rounded-xl transition-colors">
                       <FaCheck size={12} />
                     </button>
@@ -226,18 +254,6 @@ export default function AdminAllPrompts() {
                     <button onClick={() => handleDeletePrompt(prompt._id || prompt.id)} className="p-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 rounded-xl transition-colors">
                       <FaTrashAlt size={12} />
                     </button>
-
-                    {/* ডেক্সটপ কাস্টম ফিডব্যাক বক্স */}
-                    {rejectingPromptId === (prompt._id || prompt.id) && (
-                      <div className="absolute right-0 top-12 z-50 p-3 bg-slate-950 border border-amber-500/40 rounded-xl flex flex-col gap-2 w-60 shadow-2xl">
-                        <p className="text-xs text-amber-400 font-medium">Why reject this?</p>
-                        <textarea value={feedbackText} onChange={(e) => setFeedbackText(e.target.value)} placeholder="Reason..." className="w-full bg-slate-900 border border-slate-800 text-xs rounded-lg p-2 text-white resize-none h-14 focus:outline-none focus:border-amber-500" />
-                        <div className="flex justify-end gap-2">
-                          <button onClick={() => setRejectingPromptId(null)} className="px-2 py-1 bg-slate-800 text-[10px] rounded-md text-slate-300">Cancel</button>
-                          <button disabled={!feedbackText.trim()} onClick={() => handleUpdateStatus(prompt._id || prompt.id, "rejected", feedbackText)} className="px-2 py-1 bg-amber-600 text-[10px] rounded-md text-white disabled:opacity-50">Submit</button>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </td>
               </tr>
@@ -246,7 +262,6 @@ export default function AdminAllPrompts() {
         </table>
       </div>
 
-      {/* no  prompts */}
       {prompts.length === 0 && (
         <div className="text-center p-10 text-slate-500">No prompts found in database.</div>
       )}
