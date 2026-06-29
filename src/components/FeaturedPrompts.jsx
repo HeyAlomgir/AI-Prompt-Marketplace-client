@@ -62,7 +62,7 @@ export default function FeaturedPrompts() {
                     </Link>
                 </div>
                 {/* six card grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 py-5">
                     {prompts.length > 0 ? (
                         prompts.map((prompt, index) => (
                             <motion.div

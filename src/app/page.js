@@ -2,6 +2,7 @@
 
 import Banner from "@/components/Banner";
 import FeaturedPrompts from "@/components/FeaturedPrompts";
+import HomeReviews from "@/components/HomeReviews";
 import Image from "next/image";
 
 export default async function Home() {
@@ -13,6 +14,7 @@ export default async function Home() {
       <main >
         <Banner  />
         <FeaturedPrompts/>
+        <HomeReviews/>
 
 
       </main>
