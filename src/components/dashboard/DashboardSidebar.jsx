@@ -29,9 +29,12 @@ export async function DashboardSidebar() {
     const dashboardItems = {
 
         user: [
-            { icon: ChartAreaStacked, label: "Overview", link: '/dashboard/user' },
-            { icon: TbAsset, label: "My Purchases", link: '/dashboard/user/purchases' },
-            { icon: Gear, label: "Bookmarks", link: '/dashboard/user/bookmarks' }
+            { icon: IoIosAddCircle, label: "Add Prompt", link: '/dashboard/user/add-prompt' },
+            { icon: GiAnatomy, label: "My Prompts", link: '/dashboard/user/my-prompts' },
+            { icon: GiAnatomy, label: "Saved Prompts", link: '/dashboard/user/my-prompts' },
+            { icon: GiAnatomy, label: "My Reviews", link: '/dashboard/user/my-prompts' },
+            { icon: GiAnatomy, label: "Profile", link: '/dashboard/user/profile' },
+
         ],
         creator: [
 

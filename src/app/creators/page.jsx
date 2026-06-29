@@ -50,8 +50,8 @@ export default function TopCreators() {
 
         {/* Heading */}
 
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-extrabold text-white flex justify-center items-center gap-2">
+        <div className="text-center mb-12 py-5">
+          <h2 className="text-3xl py-5 font-extrabold text-white flex justify-center items-center gap-2">
             <FaAward className="text-purple-500" />
             Top Prompt Creators
           </h2>
@@ -66,7 +66,7 @@ export default function TopCreators() {
             No creator found.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="py-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
             {creators.map((creator, index) => (
 
@@ -79,7 +79,7 @@ export default function TopCreators() {
                   duration: .4,
                   delay: index * .08
                 }}
-                className="bg-[#0d0d21] border border-slate-800 rounded-2xl p-6 hover:border-purple-500/40 transition-all duration-300"
+                className=" bg-[#0d0d21] border border-slate-800 rounded-2xl p-6 hover:border-purple-500/40 transition-all duration-300"
               >
 
                 {/* Avatar */}
