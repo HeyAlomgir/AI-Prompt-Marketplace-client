@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { FaCopy, FaBookmark, FaFlag, FaStar, FaArrowLeft } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { useSession } from "@/lib/auth-client";
@@ -23,6 +23,16 @@ export default function PromptDetailsPage() {
 
     //  Report State
     const [isReportOpen, setIsReportOpen] = useState(false);
+
+    const searchParams = useSearchParams();
+    const initialSearch = searchParams.get("search") || "";
+
+  useEffect(() => {
+  // initialSearch ভ্যালু দিয়ে আপনার ব্যাকএন্ড এপিআই (যেমন: /api/prompts?search=...) কল করবেন
+  fetch(`http://localhost:5000/api/prompts?search=${initialSearch}`)
+    .then(res => res.json())
+    .then(data => setPrompt(data));
+}, [initialSearch]);
 
     const user = session?.user;
 

@@ -43,8 +43,8 @@ const Navbar = () => {
 
     return (
         <div>
-            {/* 📢 AI PROMPT MARKETPLACE BANNER TICKER */}
-            <div className="bg-black py-1.5 text-xs text-white/90">
+            {/*  AI PROMPT MARKETPLACE BANNER TICKER */}
+            <div className="bg-black py-1.5  text-xs text-white/90">
                 <marquee className="cursor-pointer" scrollamount="5">
                     <span className="mx-6">🔥 Trending: "Act as a Senior Full-Stack Developer" prompt copied 500+ times today!</span>
                     <span className="mx-6">🚀 Platform Update: Integrated direct support for Claude 3.5 Sonnet & Gemini 1.5 Pro matrices.</span>
@@ -53,9 +53,9 @@ const Navbar = () => {
             </div>
 
             {/* 🎯 NAVBAR CONTAINER */}
-            <nav className="sticky top-0 z-40 w-full border-b border-neutral-800 bg-background/70 backdrop-blur-lg">
+            <nav className="sticky  top-0 z-40 w-full border-b border-neutral-800 bg-background/70 backdrop-blur-lg">
                 <header className="flex h-16 items-center justify-between px-4 container mx-auto">
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 my-10">
                         {/* Mobile Hamburger Toggle */}
                         <button
                             className="md:hidden text-foreground"
