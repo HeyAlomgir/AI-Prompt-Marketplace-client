@@ -45,7 +45,7 @@ export async function DashboardSidebar() {
             { icon: TbAsset, label: "All Prompts", link: '/dashboard/admin/all-prompts' },
             { icon: BiMoney, label: "All Payement", link: '/dashboard/admin/all-payment' },
             { icon: ChartAreaStacked, label: "Admin Analytics", link: '/dashboard/admin' },
-            { icon: GoReport, label: "Report Prompt", link: '/dashboard/report-prompt' },
+            { icon: GoReport, label: "Report Prompt", link: '/dashboard/admin/report-prompt' },
         ],
     };
 

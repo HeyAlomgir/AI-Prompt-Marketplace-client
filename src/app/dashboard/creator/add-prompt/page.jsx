@@ -1,5 +1,6 @@
 "use client";
 
+import { useSession } from "@/lib/auth-client";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaRocket, FaCloudUploadAlt } from "react-icons/fa";
@@ -7,6 +8,7 @@ import { FaRocket, FaCloudUploadAlt } from "react-icons/fa";
 export default function AddPrompt() {
   const [loading, setLoading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const {data:session}=useSession();
 
   // ImgBB API Key 
   const IMGBB_API_KEY = "7d5904092bde09d938904cccd157874b";
@@ -46,22 +48,24 @@ export default function AddPrompt() {
         }
       }
 
-      // 🎯 Assignment Doc অনুযায়ী ১০০% নিখুঁত অবজেক্ট স্ট্রাকচার
+  
+
       const finalPromptData = {
         title: promptData.title,
         description: promptData.description,
-        promptContent: promptData.promptContent, // 🌟 ফর্মে name="promptContent" করা হয়েছে
+        promptContent: promptData.promptContent, 
         category: promptData.category,
-        aiTool: promptData.aiTool,             // 🌟 ফর্মে name="aiTool" করা হয়েছে
+        aiTool: promptData.aiTool,             
         tags: promptData.tags ? promptData.tags.split(",").map(tag => tag.trim()) : [],
-        difficulty: promptData.difficulty,    // (BEGINNER / INTERMEDIATE / PRO)
-        image: imageUrl,                       // Thumbnail Image
-        visibility: promptData.visibility,     // (PUBLIC / PRIVATE)
+        difficulty: promptData.difficulty,    
+        image: imageUrl,                       
+        visibility: promptData.visibility,    
         price: parseFloat(promptData.price) || 0, 
-        copyCount: 0,                          // ডকের রিকোয়ারমেন্ট অনুযায়ী ০
-        status: "pending",                     // ডকের রিকোয়ারমেন্ট অনুযায়ী pending
+        copyCount: 0,                          
+        status: "pending",                     
         bookmarks: 0,
         createdAt: new Date().toISOString(),
+        userEmail:session?.user?.email,
       };
 
       // Backend API
@@ -135,7 +139,7 @@ export default function AddPrompt() {
           </div>
 
           <div>
-            {/* 🌟 ডক অনুযায়ী AI Tool এবং name="aiTool" সেট করা হলো */}
+
             <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
               AI Tool
             </label>
@@ -248,7 +252,7 @@ export default function AddPrompt() {
 
         {/* Prompt Content */}
         <div>
-          {/* 🌟 ডক অনুযায়ী Prompt Content এবং name="promptContent" সেট করা হলো */}
+        
           <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
             Prompt Content
           </label>
