@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🚀 PromptVerse - AI Prompt Marketplace (Frontend)
 
-## Getting Started
+Welcome to **PromptVerse**, a next-generation marketplace designed for AI engineers, creators, and enthusiasts to discover, share, evaluate, and manage advanced AI system prompts and blueprints. 
 
-First, run the development server:
+Built with the power of Next.js 14/15, Tailwind CSS, and robust state management, this platform provides an ultra-fast, premium dark-themed experience for engineering context manipulation.
 
+---
+
+## 🌟 Key Features
+
+*   **Dynamic Prompt Discovery:** Advanced filtering systems by Categories (Coding, Graphics, Marketing, Writing, Idea Generation) and AI Tools (ChatGPT, Claude, Midjourney, Gemini, Stable Diffusion).
+*   **Architect/Creator Hub:** Interactive dashboard visualization including prompt metrics, submission statuses, and performance overviews.
+*   **Seamless Prompt Engineering Form:** Built-in ImgBB API synchronization for smooth layout thumbnail uploads, multi-tags parsing, and clear scope metadata allocation.
+*   **Aesthetic User Interface:** Premium dark mode ecosystem styled elegantly using Tailwind CSS, complete with full responsive compatibility across modern viewports.
+*   **Intuitive Feedback Loops:** Transparent submission flows defaulting newly registered assets into `pending` states for unified system stability.
+
+---
+
+## 🛠️ Tech Stack & Dependencies
+
+*   **Framework:** Next.js (App Router Architecture)
+*   **Styling:** Tailwind CSS (with glassmorphism & backdrop utilities)
+*   **Icons:** `react-icons` (FontAwesome integration)
+*   **Toasts:** `react-hot-toast` (Real-time reactive user alerts)
+*   **Authentication:** Integration-ready with modular session hooks
+
+---
+
+## 🚀 Getting Started & Installation
+
+Follow these quick commands to spin up the development ecosystem locally:
+
+### 1. Clone the Repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone <your-frontend-repository-url>
+cd promptverse-frontend
