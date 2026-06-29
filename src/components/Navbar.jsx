@@ -15,7 +15,7 @@ import React, { useState } from "react";
 import { BiLogOut, BiLogOut as LogOutIcon } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { MdDashboard } from "react-icons/md";
-import Image from "next/image";
+
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {
@@ -74,13 +74,7 @@ const Navbar = () => {
                         {/* 🚀 BRAND LOGO AREA */}
                         <Link href="/" className="flex items-center gap-2.5 text-foreground font-bold text-xl tracking-tight select-none group">
                             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-primary via-purple-500 to-indigo-600 text-white shadow-md shadow-primary/20 transition-transform duration-300 group-hover:scale-105 overflow-hidden">
-                                {/* <Image
-                                    src="https://i.ibb.co.com/M5P07f7t/image-removebg-preview.png"
-                                    width={40}
-                                    height={40}
-                                    className="object-cover scale-110"
-                                    alt="AI PromptVerse"
-                                /> */}
+                              
                                 <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-500 to-indigo-600 flex items-center justify-center text-white font-bold text-sm">
                                     AI
                                 </div>
@@ -97,8 +91,11 @@ const Navbar = () => {
                         </Link>
                     </div>
 
-                    {/* 🎯 DESKTOP MENU LINKS */}
+                    {/*  DESKTOP MENU LINKS */}
                     <ul className="hidden items-center gap-6 md:flex text-sm font-medium">
+                         <li>
+                            <Link href="/" className="text-neutral-400 hover:text-primary transition-colors">Home</Link>
+                        </li>
                         <li>
                             <Link href="/prompts" className="text-neutral-400 hover:text-primary transition-colors">All Prompts</Link>
                         </li>
@@ -181,10 +178,13 @@ const Navbar = () => {
                     </div>
                 </header>
 
-                {/* 📱 MOBILE RESPONSIVE MENU */}
+                {/*  MOBILE RESPONSIVE MENU */}
                 {isMenuOpen && (
                     <div className="border-t border-neutral-800 bg-background md:hidden">
                         <ul className="flex flex-col gap-2 p-4 text-base font-medium">
+                             <li>
+                            <Link href="/" className="text-neutral-400 hover:text-primary transition-colors">Home</Link>
+                        </li>
                             <li>
                                 <Link href="/prompts" className="block py-2 text-neutral-400" onClick={() => setIsMenuOpen(false)}>All Prompts</Link>
                             </li>

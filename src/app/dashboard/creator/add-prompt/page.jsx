@@ -66,6 +66,7 @@ export default function AddPrompt() {
         bookmarks: 0,
         createdAt: new Date().toISOString(),
         userEmail:session?.user?.email,
+        creatorName: session.user.name,
       };
 
       // Backend API
