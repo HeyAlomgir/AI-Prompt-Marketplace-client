@@ -28,7 +28,7 @@ export default function PromptDetailsPage() {
     const initialSearch = searchParams.get("search") || "";
 
   useEffect(() => {
-  // initialSearch ভ্যালু দিয়ে আপনার ব্যাকএন্ড এপিআই (যেমন: /api/prompts?search=...) কল করবেন
+  // initialSearch 
   fetch(`http://localhost:5000/api/prompts?search=${initialSearch}`)
     .then(res => res.json())
     .then(data => setPrompt(data));

@@ -1,6 +1,7 @@
 
 
 import Banner from "@/components/Banner";
+import FeaturedPrompts from "@/components/FeaturedPrompts";
 import Image from "next/image";
 
 export default async function Home() {
@@ -9,8 +10,10 @@ export default async function Home() {
   return (
     <div className=" bg-zinc-50 font-sans dark:bg-black space-y-44">
 
-      <main className="mt-5 py-24">
+      <main >
         <Banner  />
+        <FeaturedPrompts/>
+
 
       </main>
 

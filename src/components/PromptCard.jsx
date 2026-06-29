@@ -1,22 +1,31 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation"; 
 import { FaCopy, FaEye, FaStar } from "react-icons/fa";
 
-export default function PromptCard({ prompt, onCopy, onViewDetails }) {
+export default function PromptCard({ prompt, onCopy }) {
+    const router = useRouter(); 
+    const promptId = prompt._id?.$oid || prompt._id?.toString() || prompt.id;
+
+    const handleViewDetailsRedirect = () => {
+        if (promptId) {
+            router.push(`/prompts/${promptId}`);
+        }
+    };
+
     return (
         <div className="bg-[#0d0d21] border border-slate-800/50 hover:border-purple-500/30 rounded-2xl p-4 shadow-xl flex flex-col justify-between group transition-all duration-300 hover:-translate-y-1 w-full relative overflow-hidden">
             <div>
                 {/* img */}
                 <div className="w-full h-48 relative rounded-xl overflow-hidden mb-4 bg-white flex items-center justify-center">
                     <Image
-                     src={prompt.image|| "/placeholder.png" }
-                     width={"34"}
-                     height={"45"}
-                        alt={prompt.title}
-                        className="w-full h-full object-contain p-2">
-
-                    </Image>
+                        src={prompt.image || "/placeholder.png"}
+                        width={34}
+                        height={45}
+                        alt={prompt.title || "Prompt Image"}
+                        className="w-full h-full object-contain p-2"
+                    />
                 </div>
 
                 {/* bedge */}
@@ -56,7 +65,10 @@ export default function PromptCard({ prompt, onCopy, onViewDetails }) {
                     <div className="flex items-center gap-3">
                         {/* copy btn */}
                         <button
-                            onClick={() => onCopy && onCopy(prompt)}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onCopy && onCopy(prompt);
+                            }}
                             className="flex items-center gap-1 hover:text-purple-400 transition-colors"
                             title="Copy Prompt"
                         >
@@ -72,9 +84,9 @@ export default function PromptCard({ prompt, onCopy, onViewDetails }) {
                     </div>
                 </div>
 
-                {/* view detail btn */}
+            
                 <button
-                    onClick={() => onViewDetails && onViewDetails(prompt._id || prompt.id)}
+                    onClick={handleViewDetailsRedirect}
                     className="w-full flex items-center justify-center gap-1.5 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl font-bold text-xs transition-all shadow-md tracking-wide"
                 >
                     <FaEye size={12} /> View Details
