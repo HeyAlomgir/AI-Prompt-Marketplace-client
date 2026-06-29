@@ -42,6 +42,9 @@ export default function Footer() {
           <Link href="/prompts" size="sm" color="foreground" className="hover:text-purple-400 text-zinc-400 transition-colors">
             All Prompts
           </Link>
+          <Link href="/creators" size="sm" color="foreground" className="hover:text-purple-400 text-zinc-400 transition-colors">
+            Top Creators
+          </Link>
         </div>
 
         {/* legal policy*/}

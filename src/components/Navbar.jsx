@@ -53,8 +53,8 @@ const Navbar = () => {
             </div>
 
             {/* 🎯 NAVBAR CONTAINER */}
-            <nav className="sticky  top-0 z-40 w-full border-b border-neutral-800 bg-background/70 backdrop-blur-lg">
-                <header className="flex h-16 items-center justify-between px-4 container mx-auto">
+            <nav className=" sticky  top-0 z-40 w-full border-b border-neutral-800 bg-background/70 backdrop-blur-lg">
+                <header className=" flex h-16 items-center justify-between px-4 container mx-auto">
                     <div className="flex items-center gap-4 my-10">
                         {/* Mobile Hamburger Toggle */}
                         <button
@@ -71,7 +71,7 @@ const Navbar = () => {
                             </svg>
                         </button>
 
-                        {/* 🚀 BRAND LOGO AREA */}
+                        {/*  BRAND LOGO AREA */}
                         <Link href="/" className="flex items-center gap-2.5 text-foreground font-bold text-xl tracking-tight select-none group">
                             <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-primary via-purple-500 to-indigo-600 text-white shadow-md shadow-primary/20 transition-transform duration-300 group-hover:scale-105 overflow-hidden">
                               
